@@ -1,123 +1,133 @@
-/* CAPY CHILL METER
-   - Click increases meter + score
-   - Meter decays slowly over time
-   - High score saved in localStorage
-*/
-
 (() => {
+
   const meterFill = document.getElementById('meterFill');
   const meterValue = document.getElementById('meterValue');
   const clicksValue = document.getElementById('clicksValue');
   const highValue = document.getElementById('highValue');
   const bigLine = document.getElementById('bigLine');
   const chillBtn = document.getElementById('chillBtn');
-  const resetBtn = document.getElementById('resetBtn');
-  const muteBtn = document.getElementById('muteBtn');
 
-  // Replace these later with your real links (optional)
   const pumpLink = document.getElementById('pumpLink');
   const explorerLink = document.getElementById('explorerLink');
+
+  // Add real links later
   pumpLink.href = '#';
   explorerLink.href = '#';
 
-  const LSK = 'capychill_highscore_v1';
 
-  let meter = 0;        // 0..100
+  const STORAGE_KEY = 'capychill_high_v2';
+
+  let meter = 0;
   let clicks = 0;
-  let high = Number(localStorage.getItem(LSK) || 0);
+  let high = Number(localStorage.getItem(STORAGE_KEY) || 0);
 
-  let soundOn = false;
-  let audioCtx = null;
 
   const lines = [
-    'capy is unbothered.',
-    'vibes restored.',
-    'market noise muted.',
-    'touch grass (mentally).',
-    'sideways? capy doesn’t care.',
-    'we chill regardless.',
-    'this is fine.',
-    'capy absorbs the volatility.',
-    'serotonin +1',
-    'still chill.'
+
+    "stay unbothered.",
+    "market noise muted.",
+    "vibes restored.",
+    "capy does not panic.",
+    "still chilling.",
+    "touch grass mentally.",
+    "no stress allowed.",
+    "sideways = fine.",
+    "we vibe anyway.",
+    "ignore the candles.",
+    "inner peace unlocked.",
+    "chill > charts.",
+    "nothing matters.",
+    "serotonin +1",
+    "this is fine.",
+    "capy approves.",
+    "emotional stability gained.",
+    "fear rejected.",
+    "zen mode active.",
+    "holding calmly.",
+    "zero rush.",
+    "no fomo.",
+    "still breathing.",
+    "price is noise.",
+    "calm is alpha.",
+    "relax.",
+    "capy therapy.",
+    "mind at ease.",
+    "bag secure.",
+    "soft hands.",
+    "vibes only.",
+    "low cortisol.",
+    "unshakeable.",
+    "centered.",
+    "balanced.",
+    "grounded.",
+    "cool head.",
+    "slow pulse.",
+    "deep breath.",
+    "peaceful."
+
   ];
 
-  function setUI() {
+
+  function updateUI(){
+
     const pct = Math.max(0, Math.min(100, meter));
-    meterFill.style.width = `${pct}%`;
-    meterValue.textContent = `${Math.round(pct)}%`;
-    clicksValue.textContent = String(clicks);
-    highValue.textContent = String(high);
+
+    meterFill.style.width = pct + '%';
+    meterValue.textContent = Math.round(pct) + '% chill';
+
+    clicksValue.textContent = clicks;
+    highValue.textContent = high;
   }
 
-  function randomLine() {
-    const idx = Math.floor(Math.random() * lines.length);
-    bigLine.textContent = lines[idx];
+
+  function randomLine(){
+
+    const i = Math.floor(Math.random() * lines.length);
+    bigLine.textContent = lines[i];
   }
 
-  function beep() {
-    if (!soundOn) return;
-    try {
-      if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-      const o = audioCtx.createOscillator();
-      const g = audioCtx.createGain();
-      o.type = 'sine';
-      o.frequency.value = 440 + Math.random() * 120;
-      g.gain.value = 0.03;
-      o.connect(g);
-      g.connect(audioCtx.destination);
-      o.start();
-      o.stop(audioCtx.currentTime + 0.05);
-    } catch (_) {}
-  }
 
-  function onChill() {
-    clicks += 1;
+  function onClick(){
 
-    // Increase meter with diminishing returns near 100
-    const gain = meter < 70 ? 6 : meter < 90 ? 4 : 2;
+    clicks++;
+
+    let gain = 6;
+
+    if(meter > 70) gain = 4;
+    if(meter > 90) gain = 2;
+
     meter = Math.min(100, meter + gain);
 
-    if (clicks > high) {
+    if(clicks > high){
       high = clicks;
-      localStorage.setItem(LSK, String(high));
+      localStorage.setItem(STORAGE_KEY, high);
     }
 
-    if (clicks % 3 === 0) randomLine();
-    beep();
-    setUI();
+    if(clicks % 2 === 0){
+      randomLine();
+    }
 
-    // Tiny button micro-feedback
-    chillBtn.textContent = meter >= 95 ? 'MAX CHILL' : 'CHILL';
+    updateUI();
   }
 
-  function resetSession() {
-    meter = 0;
-    clicks = 0;
-    chillBtn.textContent = 'CHILL';
-    bigLine.textContent = 'Market flat. Capy chill.';
-    setUI();
-  }
 
-  function toggleSound() {
-    soundOn = !soundOn;
-    muteBtn.textContent = `Sound: ${soundOn ? 'On' : 'Off'}`;
-    if (soundOn) beep();
-  }
-
-  // Slow decay loop
-  // Every 300ms, decay slightly. Faster decay if meter is high (keeps it interactive).
+  // Decay
   setInterval(() => {
-    const decay = meter > 85 ? 0.35 : meter > 50 ? 0.25 : meter > 15 ? 0.18 : 0.10;
+
+    let decay = 0.12;
+
+    if(meter > 80) decay = 0.25;
+    if(meter > 95) decay = 0.4;
+
     meter = Math.max(0, meter - decay);
-    if (meter < 95 && chillBtn.textContent !== 'CHILL') chillBtn.textContent = 'CHILL';
-    setUI();
-  }, 300);
 
-  chillBtn.addEventListener('click', onChill);
-  resetBtn.addEventListener('click', resetSession);
-  muteBtn.addEventListener('click', toggleSound);
+    updateUI();
 
-  // Init
-  setUI();
+  }, 250);
+
+
+  chillBtn.addEventListener('click', onClick);
+
+  updateUI();
+
 })();
