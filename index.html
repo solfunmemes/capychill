@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>CAPY CHILL</title>
+  <meta name="description" content="CAPY CHILL — a tiny on-chain meme experiment. Press CHILL." />
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+  <div class="wrap">
+    <header class="top">
+      <div class="brand">
+        <div class="badge">CAPY</div>
+        <div class="titleblock">
+          <h1>CAPY CHILL</h1>
+          <p class="sub">Press the button. Restore the vibes.</p>
+        </div>
+      </div>
+
+      <div class="stats">
+        <div class="stat">
+          <div class="label">Chill Meter</div>
+          <div class="value" id="meterValue">0%</div>
+        </div>
+        <div class="stat">
+          <div class="label">Session Passes</div>
+          <div class="value" id="clicksValue">0</div>
+        </div>
+        <div class="stat">
+          <div class="label">High Score</div>
+          <div class="value" id="highValue">0</div>
+        </div>
+      </div>
+    </header>
+
+    <main class="main">
+      <section class="card hero">
+        <div class="hero-left">
+          <img class="capy" src="./assets/capy-sunglasses.png" alt="Capybara with sunglasses" />
+          <div class="meter">
+            <div class="meter-bar">
+              <div class="meter-fill" id="meterFill"></div>
+            </div>
+            <div class="meter-hint">Chill decays slowly. Keep it topped up.</div>
+          </div>
+        </div>
+
+        <div class="hero-right">
+          <div class="bigline" id="bigLine">Market flat. Capy chill.</div>
+
+          <button class="btn" id="chillBtn" type="button">
+            CHILL
+          </button>
+
+          <div class="row">
+            <button class="btn ghost" id="resetBtn" type="button">Reset Session</button>
+            <button class="btn ghost" id="muteBtn" type="button">Sound: Off</button>
+          </div>
+
+          <div class="note">
+            This page is a tiny browser game + info sheet. No wallet connect, no tracking.
+          </div>
+        </div>
+      </section>
+
+      <section class="card info">
+        <h2>What is this?</h2>
+        <p>
+          CAPY is an on-chain meme experiment. The site exists to keep eyes on the page long enough to
+          understand the vibe.
+        </p>
+
+        <div class="info-grid">
+          <div class="pill">
+            <div class="pill-title">Mode</div>
+            <div class="pill-text">Mayhem (optional)</div>
+          </div>
+          <div class="pill">
+            <div class="pill-title">Style</div>
+            <div class="pill-text">Animal meme (capy)</div>
+          </div>
+          <div class="pill">
+            <div class="pill-title">Mechanics</div>
+            <div class="pill-text">Chill meter + high score</div>
+          </div>
+        </div>
+
+        <div class="links">
+          <a class="link" href="#" id="pumpLink" target="_blank" rel="noreferrer">pump.fun link (add yours)</a>
+          <a class="link" href="#" id="explorerLink" target="_blank" rel="noreferrer">explorer link (add yours)</a>
+        </div>
+
+        <div class="disclaimer">
+          <strong>Disclaimer:</strong> This is an experiment for entertainment. Not financial advice.
+          Expect chaos. Expect nothing.
+        </div>
+      </section>
+    </main>
+
+    <footer class="foot">
+      <span>capychill.xyz</span>
+      <span class="dot">•</span>
+      <span>made to be clicked, not explained</span>
+    </footer>
+  </div>
+
+  <script src="./game.js"></script>
+</body>
+</html>
