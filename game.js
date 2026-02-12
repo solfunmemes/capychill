@@ -11,8 +11,8 @@
   const explorerLink = document.getElementById('explorerLink');
 
   // Add real links later
-  pumpLink.href = '#';
-  explorerLink.href = '#';
+  pumpLink.href = 'https://pump.fun/';
+  explorerLink.href = 'https://solscan.io/';
 
 
   const STORAGE_KEY = 'capychill_high_v2';
